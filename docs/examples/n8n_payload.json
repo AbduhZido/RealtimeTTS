@@ -1,0 +1,64 @@
+{
+  "session_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "meeting_metadata": {
+    "session_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "title": "Team Weekly Meeting",
+    "participants": {
+      "host": "john.doe@example.com",
+      "attendees": ["alice@example.com", "bob@example.com", "charlie@example.com"]
+    },
+    "language": "en",
+    "model": "tiny.en",
+    "start_time": "2024-01-15T10:00:00.000Z",
+    "webhook_enabled": true,
+    "meeting_id": "meeting-12345",
+    "agenda": ["Project Updates", "Budget Review", "Next Steps"]
+  },
+  "timestamp": "2024-01-15T10:05:30.123Z",
+  "transcript_segments": [
+    {
+      "segment_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890_0",
+      "text": "Welcome everyone to our weekly team meeting",
+      "start_time": 1705316400.0,
+      "end_time": 1705316401.5,
+      "is_final": true,
+      "speaker_id": "host",
+      "confidence": 0.95
+    },
+    {
+      "segment_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890_1",
+      "text": "Let's start with project updates",
+      "start_time": 1705316401.5,
+      "end_time": 1705316402.8,
+      "is_final": true,
+      "speaker_id": "host",
+      "confidence": 0.92
+    },
+    {
+      "segment_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890_2",
+      "text": "Great news! The API integration is nearly complete",
+      "start_time": 1705316403.2,
+      "end_time": 1705316404.9,
+      "is_final": true,
+      "speaker_id": "alice@example.com",
+      "confidence": 0.88
+    },
+    {
+      "segment_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890_3",
+      "text": "That's fantastic. When do you expect to finish",
+      "start_time": 1705316405.1,
+      "end_time": 1705316406.2,
+      "is_final": false,
+      "speaker_id": "host",
+      "confidence": 0.91
+    }
+  ],
+  "full_transcript": "Welcome everyone to our weekly team meeting. Let's start with project updates. Great news! The API integration is nearly complete. That's fantastic. When do you expect to finish",
+  "stats": {
+    "total_segments": 4,
+    "final_segments": 3,
+    "partial_segments": 1,
+    "total_duration": 6.2,
+    "buffer_size_chars": 187
+  }
+}
