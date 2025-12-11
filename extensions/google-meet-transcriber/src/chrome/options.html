@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Meet Transcriber - Settings</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 24px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+      color: #1a73e8;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: #333;
+      font-size: 14px;
+    }
+
+    input[type='text'],
+    input[type='url'],
+    input[type='password'],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #d0d0d0;
+      border-radius: 4px;
+      font-size: 14px;
+      font-family: inherit;
+    }
+
+    input[type='text']:focus,
+    input[type='url']:focus,
+    input[type='password']:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #1a73e8;
+      box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .help-text {
+      font-size: 12px;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    button {
+      padding: 10px 24px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: #1a73e8;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #1557b0;
+    }
+
+    .btn-primary:active {
+      background: #0d47a1;
+    }
+
+    .btn-secondary {
+      background: #e8e8e8;
+      color: #333;
+    }
+
+    .btn-secondary:hover {
+      background: #d8d8d8;
+    }
+
+    .success-message {
+      padding: 12px;
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      border-radius: 4px;
+      margin-bottom: 16px;
+      display: none;
+    }
+
+    .success-message.show {
+      display: block;
+    }
+
+    .section {
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .section:last-child {
+      border-bottom: none;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 16px;
+      color: #1a73e8;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Google Meet Transcriber</h1>
+    <p class="subtitle">Configure transcription settings</p>
+
+    <div class="success-message" id="successMessage">
+      ✓ Settings saved successfully
+    </div>
+
+    <form id="settingsForm">
+      <div class="section">
+        <div class="section-title">Relay Service</div>
+
+        <div class="form-group">
+          <label for="backendUrl">Backend WebSocket URL</label>
+          <input
+            type="url"
+            id="backendUrl"
+            placeholder="ws://localhost:8000/ws/transcribe"
+            required
+          />
+          <div class="help-text">
+            URL of the meet_transcriber relay service
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="apiKey">API Key (optional)</label>
+          <input
+            type="password"
+            id="apiKey"
+            placeholder="Leave blank if not required"
+          />
+          <div class="help-text">
+            Authentication token for the relay service
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Transcription</div>
+
+        <div class="form-group">
+          <label for="language">Language</label>
+          <input
+            type="text"
+            id="language"
+            value="en-US"
+            placeholder="en-US"
+          />
+          <div class="help-text">
+            Language code (e.g., en-US, es-ES, fr-FR)
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Webhooks</div>
+
+        <div class="form-group">
+          <label for="webhookIds">Webhook IDs (optional)</label>
+          <textarea
+            id="webhookIds"
+            placeholder="One webhook ID per line"
+          ></textarea>
+          <div class="help-text">
+            Webhook IDs to post transcription results to
+          </div>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="submit" class="btn-primary">Save Settings</button>
+        <button type="reset" class="btn-secondary">Reset</button>
+      </div>
+    </form>
+  </div>
+
+  <script type="module" src="chrome/options.js"></script>
+</body>
+</html>
