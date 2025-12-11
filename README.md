@@ -66,7 +66,13 @@ Let me know if you need any adjustments or additional languages!
 
 RealtimeTTS can be integrated with various external services and platforms:
 
-- **[Google Meet Transcriber](./docs/en/google_meet_transcriber.md)** - End-to-end pipeline for real-time Google Meet transcription using a browser extension, RealtimeSTT relay, and N8N workflow automation. Learn about the architecture, WebSocket + PCM streaming protocol, webhook payload contracts, and security considerations.
+### Google Meet Transcriber
+
+End-to-end pipeline for real-time Google Meet transcription using a browser extension, RealtimeSTT relay, and N8N workflow automation.
+
+- **[Setup Guide](./docs/en/google_meet_setup.md)** - Step-by-step instructions for non-technical operators to set up the complete pipeline, including Docker Compose configuration, browser extension installation, N8N webhook setup, and troubleshooting tips. Available in [English](./docs/en/google_meet_setup.md) and [Portuguese](./docs/pt/google_meet_setup.md).
+
+- **[Architecture & Technical Reference](./docs/en/google_meet_transcriber.md)** - Detailed documentation of the system design, WebSocket + PCM streaming protocol, webhook payload contracts, and security considerations for developers and architects.
 
 For more integrations and architecture documentation, please visit the [full documentation](https://koljab.github.io/RealtimeTTS/).
 
