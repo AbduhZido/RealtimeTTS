@@ -106,15 +106,28 @@ nav:
     - 한국어: ko/contributing.md  
     - Português: pt/contributing.md
     - Русский: ru/contributing.md  
-  - FAQ: 
+  - FAQ:
     - English: en/faq.md
     - Français: fr/faq.md
-    - Español: es/faq.md  
-    - Deutsch: de/faq.md  
-    - Italiano: it/faq.md  
-    - 中文: zh/faq.md  
-    - 日本語: ja/faq.md  
-    - हिंदी: hi/faq.md  
-    - 한국어: ko/faq.md  
-    - Português: pt/faq.md  
-    - Русский: ru/faq.md  
+    - Español: es/faq.md
+    - Deutsch: de/faq.md
+    - Italiano: it/faq.md
+    - 中文: zh/faq.md
+    - 日本語: ja/faq.md
+    - हिंदी: hi/faq.md
+    - 한국어: ko/faq.md
+    - Português: pt/faq.md
+    - Русский: ru/faq.md
+  - Integrations:
+    - Google Meet Transcriber:
+      - English: en/google_meet_transcriber.md
+      - Français: fr/google_meet_transcriber.md
+      - Español: es/google_meet_transcriber.md
+      - Deutsch: de/google_meet_transcriber.md
+      - Italiano: it/google_meet_transcriber.md
+      - 中文: zh/google_meet_transcriber.md
+      - 日本語: ja/google_meet_transcriber.md
+      - हिंदी: hi/google_meet_transcriber.md
+      - 한국어: ko/google_meet_transcriber.md
+      - Português: pt/google_meet_transcriber.md
+      - Русский: ru/google_meet_transcriber.md
