@@ -4,7 +4,8 @@ import logging
 import signal
 import sys
 from contextlib import asynccontextmanager
-from typing import Dict
+from datetime import datetime
+from typing import Dict, Optional
 from uuid import UUID
 
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException, Header
@@ -13,6 +14,8 @@ from fastapi.responses import JSONResponse
 from meet_transcriber.config import settings
 from meet_transcriber.session_manager import SessionManager
 from meet_transcriber.transcriber import AudioTranscriber
+from meet_transcriber.n8n_client import N8NWebhookClient
+from meet_transcriber.transcript_buffer import TranscriptBuffer
 
 logging.basicConfig(
     level=getattr(logging, settings.log_level.upper()),
@@ -88,6 +91,43 @@ def verify_auth_token(authorization: str = Header(None)) -> bool:
     return False
 
 
+async def send_transcript_to_webhook(
+    session_id: UUID,
+    participant_info: Dict,
+    transcript_buffer: TranscriptBuffer,
+    n8n_client: Optional[N8NWebhookClient],
+) -> bool:
+    """Send transcript buffer to N8N webhook if configured."""
+    if not n8n_client or not n8n_client.webhook_url:
+        return False
+    
+    try:
+        payload = {
+            "meeting_metadata": {
+                "session_id": str(session_id),
+                "participants": participant_info.get("participants", []),
+                "meeting_id": participant_info.get("meeting_id"),
+                "meeting_title": participant_info.get("meeting_title"),
+                "language": settings.language,
+                "start_time": transcript_buffer.created_at.isoformat(),
+                "end_time": datetime.utcnow().isoformat(),
+            },
+            "transcript": {
+                "full": transcript_buffer.get_full_transcript(),
+                "segments": transcript_buffer.get_all_segments(),
+            },
+            "delivery_status": "pending",
+        }
+        
+        result = await n8n_client.send_payload(payload)
+        if result:
+            payload["delivery_status"] = "delivered"
+        return result
+    except Exception as e:
+        logger.error(f"Error preparing webhook payload: {e}")
+        return False
+
+
 @app.get("/healthz")
 async def health_check():
     active_count = await session_manager.get_active_session_count() if session_manager else 0
@@ -120,6 +160,8 @@ async def websocket_transcribe(websocket: WebSocket):
     session = None
     transcriber = None
     transcription_task = None
+    transcript_buffer = TranscriptBuffer()
+    n8n_client: Optional[N8NWebhookClient] = None
     
     try:
         init_message = await websocket.receive_json()
@@ -142,12 +184,25 @@ async def websocket_transcribe(websocket: WebSocket):
             return
         
         participant_info = init_message.get("participant_info", {})
+        n8n_webhook_url = init_message.get("n8n_webhook_url")
+        
         session = await session_manager.create_session(participant_info)
         
         logger.info(f"WebSocket connected for session {session.session_id}")
         
+        if n8n_webhook_url or settings.n8n_webhook_url:
+            webhook_url = n8n_webhook_url or settings.n8n_webhook_url
+            n8n_client = N8NWebhookClient(
+                webhook_url=webhook_url,
+                max_retries=settings.n8n_max_retries,
+                retry_delay=settings.n8n_retry_delay,
+                timeout=settings.n8n_timeout,
+            )
+            logger.info(f"N8N webhook client configured for session {session.session_id}")
+        
         async def send_transcript(text: str, is_final: bool):
             try:
+                transcript_buffer.add_segment(text, is_final)
                 await websocket.send_json({
                     "type": "transcript",
                     "text": text,
@@ -209,6 +264,17 @@ async def websocket_transcribe(websocket: WebSocket):
         except:
             pass
     finally:
+        if session and transcript_buffer.has_final_segments() and n8n_client:
+            try:
+                await send_transcript_to_webhook(
+                    session.session_id,
+                    session.participant_info,
+                    transcript_buffer,
+                    n8n_client,
+                )
+            except Exception as e:
+                logger.error(f"Error sending transcript to webhook: {e}")
+        
         if session:
             try:
                 await session_manager.end_session(session.session_id)

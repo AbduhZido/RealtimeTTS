@@ -31,3 +31,26 @@ def test_settings_from_env(monkeypatch):
     assert settings.max_concurrent_sessions == 20
     assert settings.port == 9000
     assert settings.log_level == "DEBUG"
+
+
+def test_default_n8n_settings():
+    settings = Settings()
+    
+    assert settings.n8n_webhook_url is None
+    assert settings.n8n_max_retries == 3
+    assert settings.n8n_retry_delay == 1.0
+    assert settings.n8n_timeout == 30.0
+
+
+def test_n8n_settings_from_env(monkeypatch):
+    monkeypatch.setenv("MEET_TRANSCRIBER_N8N_WEBHOOK_URL", "https://n8n.example.com/webhook")
+    monkeypatch.setenv("MEET_TRANSCRIBER_N8N_MAX_RETRIES", "5")
+    monkeypatch.setenv("MEET_TRANSCRIBER_N8N_RETRY_DELAY", "2.5")
+    monkeypatch.setenv("MEET_TRANSCRIBER_N8N_TIMEOUT", "45.0")
+    
+    settings = Settings()
+    
+    assert settings.n8n_webhook_url == "https://n8n.example.com/webhook"
+    assert settings.n8n_max_retries == 5
+    assert settings.n8n_retry_delay == 2.5
+    assert settings.n8n_timeout == 45.0
