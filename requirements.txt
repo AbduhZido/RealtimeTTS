@@ -48,3 +48,14 @@ pydub==0.25.1
 
 # resampy is used to resample from the tts to the target device sample rate 
 resampy==0.4.3
+
+# meet_transcriber dependencies
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+websockets==14.1
+pydantic-settings==2.7.0
+numpy==1.26.4
+RealtimeSTT==0.3.8
+pytest==8.3.4
+pytest-asyncio==0.24.0
+httpx==0.28.1
