@@ -1,0 +1,43 @@
+{
+  "meeting_metadata": {
+    "session_id": "123e4567-e89b-12d3-a456-426614174000",
+    "participants": [
+      {
+        "name": "Alice",
+        "email": "alice@example.com",
+        "role": "speaker"
+      },
+      {
+        "name": "Bob",
+        "email": "bob@example.com",
+        "role": "participant"
+      }
+    ],
+    "meeting_id": "meeting-2024-01-15-001",
+    "meeting_title": "Q1 Planning Meeting",
+    "language": "en",
+    "start_time": "2024-01-15T10:30:00.000000",
+    "end_time": "2024-01-15T11:15:30.000000"
+  },
+  "transcript": {
+    "full": "Hello everyone, welcome to the Q1 planning meeting. Let's discuss the roadmap for this quarter. First item on agenda...",
+    "segments": [
+      {
+        "text": "Hello everyone, welcome to the Q1 planning meeting.",
+        "is_final": true,
+        "timestamp": "2024-01-15T10:30:05.123456"
+      },
+      {
+        "text": "Let's discuss the roadmap for this quarter.",
+        "is_final": true,
+        "timestamp": "2024-01-15T10:30:15.456789"
+      },
+      {
+        "text": "First item on agenda...",
+        "is_final": false,
+        "timestamp": "2024-01-15T10:30:25.789012"
+      }
+    ]
+  },
+  "delivery_status": "delivered"
+}
